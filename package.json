@@ -1,0 +1,16 @@
+{
+  "name": "backend-contacto-api",
+  "version": "1.0.0",
+  "description": "\"api de contactos\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "author": "EB",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16",
+    "pg": "^8.7.3"
+  }
+}
