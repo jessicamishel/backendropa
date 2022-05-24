@@ -1,5 +1,5 @@
 const {Router} = require('express')
-const { getContactos, getContactoByid, postCreateContactos, deleteContacto } = require('../controllers/index.controllers')
+const { getContactos, getContactoByid, postCreateContactos, deleteContacto } = require('../controllers/controllers')
 const router = Router()
 
 router.get("/contactos",getContactos)
