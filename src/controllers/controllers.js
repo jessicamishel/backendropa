@@ -14,23 +14,24 @@ const getContactos = async (req, res) => {
     res.status(200).json(response.rows);
 }
 
-const getContactoByid = async (req, res) => {
-    const id = req.params.id
-    const response = await pool.query('SELECT * FROM contacto WHERE id_contacto = $1', [id])
-    res.json(response.rows);
-   
-}
 
 const postCreateContactos = async (req, res) => {
     const { nombre,telefono,direccion,correo } = req.body;
     //const response = await 
-    const response = await pool.query('INSERT INTO agenda(nombre,telefono,direccion,correo) VALUES ($1,$2,$3,$4)', [nombre,telefono,direccion,correo]);
+    const response = await pool.query('INSERT INTO contacto(nombre,telefono,direccion,correo) VALUES ($1,$2,$3,$4)', [nombre,telefono,direccion,correo]);
     console.log(response);
     res.json({
         message: 'USUARIO AGREGADO CORRECTAMENTE',
 
     })
 };
+
+const getContactoByid = async (req, res) => {
+    const id = req.params.id
+    const response = await pool.query('SELECT * FROM contacto WHERE id_contacto = $1', [id])
+    res.json(response.rows);
+   
+}
 
 const deleteContacto = async (req, res) => {
     const id_contacto = req.params.id;
