@@ -39,6 +39,19 @@ const deleteContacto = async (req, res) => {
     console.log(response);
     res.json(`Usuario ${id_contacto} eliminado `)
 }
+const putUpdateContacto = async(req,res) =>{
+
+    const {id_contacto,nombre, telefono, direccion, correo} = req.query;
+    const response = await db.query('UPDATE public.contacto SET nombre=$2, telefono=$3, direccion=$4, correo=$5 WHERE id_contacto=$1;',[id_contacto,nombre, telefono, direccion, correo]) //primer paramatero de el arreglo
+    //UPDATE public.contacto SET id_contacto=?, nombre=?, telefono=?, direccion=?, correo=? WHERE <condition>;
+    res.json({
+        message: 'Contacto ACTUALIZADA con exito',
+        body:{
+            pizza:{id_contacto,nombre, telefono, direccion, correo}
+        }
+    })
+
+}
 
 
 module.exports ={
