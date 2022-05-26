@@ -58,5 +58,6 @@ module.exports ={
     getContactos,
     getContactoByid,
     postCreateContactos,
-    deleteContacto
+    deleteContacto,
+    putUpdateContacto
 }
