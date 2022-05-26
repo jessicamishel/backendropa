@@ -34,10 +34,10 @@ const getContactoByid = async (req, res) => {
 }
 
 const deleteContacto = async (req, res) => {
-    const id_contacto = req.params.id_contacto;
-    const response = await pool.query('DELETE FROM contacto WHERE id_contacto = $1', [id_contacto])
+    const id = req.params.id;
+    const response = await pool.query('DELETE FROM contacto WHERE id_contacto = $1', [id])
     console.log(response);
-    res.json(`Usuario ${id_contacto} eliminado `)
+    res.json(`Usuario ${id} eliminado `)
 }
 const putUpdateContacto = async(req,res) =>{
 
@@ -52,7 +52,7 @@ const putUpdateContacto = async(req,res) =>{
     })    
 }
 const updateContacto = async(req,res) =>{
-    const id_contacto = req.params.id_contacto;
+    const id = req.params.id;
 
     const{nombre,telefono,direccion, correo} = req.body;
     const response = await pool.query('UPDATE contacto SET nombre=$1, telefono=$2, direccion=$3, correo=$4 WHERE id_contacto=$5',[
@@ -60,10 +60,10 @@ const updateContacto = async(req,res) =>{
         telefono,
         direccion,
         correo,
-        id_contacto
+        id
     ]);
     
-    res.json(`Contacto ${id_contacto} actualizado correctamente`)
+    res.json(`Contacto ${id} actualizado correctamente`)
 
     
 }
