@@ -34,7 +34,7 @@ const getContactoByid = async (req, res) => {
 }
 
 const deleteContacto = async (req, res) => {
-    const id_contacto = req.params.id;
+    const id_contacto = req.params.id_contacto;
     const response = await pool.query('DELETE FROM contacto WHERE id_contacto = $1', [id_contacto])
     console.log(response);
     res.json(`Usuario ${id_contacto} eliminado `)
@@ -49,8 +49,23 @@ const putUpdateContacto = async(req,res) =>{
         body:{
             pizza:{id_contacto,nombre, telefono, direccion, correo}
         }
-    })
+    })    
+}
+const updateContacto = async(req,res) =>{
+    const id_contacto = req.params.id_contacto;
 
+    const{nombre,telefono,direccion, correo} = req.body;
+    const response = await pool.query('UPDATE contacto SET nombre=$1, telefono=$2, direccion=$3, correo=$4 WHERE id_contacto=$5',[
+        nombre,
+        telefono,
+        direccion,
+        correo,
+        id_contacto
+    ]);
+    
+    res.json(`Contacto ${id_contacto} actualizado correctamente`)
+
+    
 }
 
 
@@ -59,5 +74,6 @@ module.exports ={
     getContactoByid,
     postCreateContactos,
     deleteContacto,
-    putUpdateContacto
+    putUpdateContacto,
+    updateContacto
 }
