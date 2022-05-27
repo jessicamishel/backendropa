@@ -16,9 +16,9 @@ const getTemperatura = async (req, res) => {
 
 
 const postCreateTemperatura = async (req, res) => {
-    const {ciudad,temperatura_valor,latitud,longitud} = req.body;
+    const {ciudad,temperatura_valor,latitud,longitud,fecha} = req.body;
     //const response = await 
-    const response = await pool.query('INSERT INTO temperatura(ciudad,temperatura_valor,latitud,longitud) VALUES ($1,$2,$3,$4)', [ciudad,temperatura_valor,latitud,longitud]);
+    const response = await pool.query('INSERT INTO temperatura(ciudad,temperatura_valor,latitud,longitud,fecha) VALUES ($1,$2,$3,$4,$5)', [ciudad,temperatura_valor,latitud,longitud,fecha]);
     console.log(response);
     res.json({
         message: 'Temperatura AGREGADO CORRECTAMENTE',
@@ -41,13 +41,13 @@ const deleteTemperatura = async (req, res) => {
 }
 const putUpdateTemperatura = async(req,res) =>{
 
-    const {id_temperatura,ciudad,temperatura_valor,latitud,longitud} = req.query;
-    const response = await db.query('UPDATE public.temperatura SET ciudad=$2,temperatura_valor=$3,latitud=$4,longitud=$5 WHERE id_temperatura=$1;',[id_temperatura,ciudad,temperatura_valor,latitud,longitud]) //primer paramatero de el arreglo
+    const {id_temperatura,ciudad,temperatura_valor,latitud,longitud,fecha} = req.query;
+    const response = await db.query('UPDATE public.temperatura SET ciudad=$2,temperatura_valor=$3,latitud=$4,longitud=$5,fecha=$6 WHERE id_temperatura=$1;',[id_temperatura,ciudad,temperatura_valor,latitud,longitud, fecha]) //primer paramatero de el arreglo
     //UPDATE public.contacto SET id_contacto=?, nombre=?, telefono=?, direccion=?, correo=? WHERE <condition>;
     res.json({
         message: 'Temperatura ACTUALIZADA con exito',
         body:{
-            temperatura:{id_temperatura,ciudad,temperatura_valor,latitud,longitud}
+            temperatura:{id_temperatura,ciudad,temperatura_valor,latitud,longitud,fecha}
         }
     })    
 }
@@ -55,11 +55,12 @@ const updateTemperatura = async(req,res) =>{
     const id = req.params.id;
 
     const{ciudad,temperatura_valor,latitud,longitud} = req.body;
-    const response = await pool.query('UPDATE temperatura SET ciudad=$1,temperatura_valor=$2,latitud=$3,longitud=$4 WHERE id_temperatura=$5',[
+    const response = await pool.query('UPDATE temperatura SET ciudad=$1,temperatura_valor=$2,latitud=$3,longitud=$4,fecha=$5 WHERE id_temperatura=$6',[
         ciudad,
         temperatura_valor,
         latitud,
         longitud,
+        fecha,
         id
     ]);
     
@@ -68,12 +69,17 @@ const updateTemperatura = async(req,res) =>{
     
 }
 
-
+const postUsuario= async (req, res)=> {
+    const { usuario, contrasenia } = req.body;
+    const response = await pool.query('SELECT * FROM usuario WHERE usuario = $1 and contrasenia=$2', [usuario, contrasenia]);
+    res.status(200).json(response.rows);
+}
 module.exports ={
     getTemperatura,
     getTemperaturaByid,
     postCreateTemperatura,
     deleteTemperatura,
     putUpdateTemperatura,
-    updateTemperatura
+    updateTemperatura,
+    postUsuario
 }
