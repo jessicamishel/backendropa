@@ -74,6 +74,17 @@ const postUsuario= async (req, res)=> {
     const response = await pool.query('SELECT * FROM usuario WHERE usuario = $1 and contrasenia=$2', [usuario, contrasenia]);
     res.status(200).json(response.rows);
 }
+const getTemperaturaAltas = async (req, res) => {
+    const response = await pool.query('select * from temperatura order by temperatura_valor desc limit 5;')
+    res.status(200).json(response.rows);
+}
+const getTemperaturaByDate = async (req, res) => {
+    const date = req.params.date
+    const response = await pool.query('select * from temperatura where fecha=$1 order by temperatura_valor desc limit 5;', [date])
+    res.json(response.rows);
+    //select * from temperatura where fecha='27-05-2022' order by temperatura_valor desc limit 5;
+   
+}
 module.exports ={
     getTemperatura,
     getTemperaturaByid,
@@ -81,5 +92,7 @@ module.exports ={
     deleteTemperatura,
     putUpdateTemperatura,
     updateTemperatura,
-    postUsuario
+    postUsuario,
+    getTemperaturaAltas,
+    getTemperaturaByDate
 }
