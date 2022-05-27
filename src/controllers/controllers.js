@@ -2,78 +2,78 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
     
-    host: 'bzoqkfs9k1mirwckdlcc-postgresql.services.clever-cloud.com',
+    host: 'bpk3cjyu8b3ri5jrpwtl-postgresql.services.clever-cloud.com',
     port: '5432',
-    database: 'bzoqkfs9k1mirwckdlcc',
-    user: 'u2lkjnjgrouwotbpoopk',
-    password: 'Tun7JV0y4hPD1DOTAk5j'
+    database: 'bpk3cjyu8b3ri5jrpwtl',
+    user: 'u3zojzq3wlqcgif2z9it',
+    password: 'zOTipYek5dCXLmTDxXzC'
 });
 
-const getContactos = async (req, res) => {
-    const response = await pool.query('SELECT * FROM contacto;')
+const getTemperatura = async (req, res) => {
+    const response = await pool.query('SELECT * FROM temperatura;')
     res.status(200).json(response.rows);
 }
 
 
-const postCreateContactos = async (req, res) => {
-    const { nombre,telefono,direccion,correo } = req.body;
+const postCreateTemperatura = async (req, res) => {
+    const {ciudad,temperatura_valor,latitud,longitud} = req.body;
     //const response = await 
-    const response = await pool.query('INSERT INTO contacto(nombre,telefono,direccion,correo) VALUES ($1,$2,$3,$4)', [nombre,telefono,direccion,correo]);
+    const response = await pool.query('INSERT INTO temperatura(ciudad,temperatura_valor,latitud,longitud) VALUES ($1,$2,$3,$4)', [ciudad,temperatura_valor,latitud,longitud]);
     console.log(response);
     res.json({
-        message: 'USUARIO AGREGADO CORRECTAMENTE',
+        message: 'Temperatura AGREGADO CORRECTAMENTE',
 
     })
 };
 
-const getContactoByid = async (req, res) => {
+const getTemperaturaByid = async (req, res) => {
     const id = req.params.id
-    const response = await pool.query('SELECT * FROM contacto WHERE id_contacto = $1', [id])
+    const response = await pool.query('SELECT * FROM temperatura WHERE id_temperatura = $1', [id])
     res.json(response.rows);
    
 }
 
-const deleteContacto = async (req, res) => {
+const deleteTemperatura = async (req, res) => {
     const id = req.params.id;
-    const response = await pool.query('DELETE FROM contacto WHERE id_contacto = $1', [id])
+    const response = await pool.query('DELETE FROM temperatura WHERE id_temperatura = $1', [id])
     console.log(response);
-    res.json(`Usuario ${id} eliminado `)
+    res.json(`temperatura ${id} eliminado `)
 }
-const putUpdateContacto = async(req,res) =>{
+const putUpdateTemperatura = async(req,res) =>{
 
-    const {id_contacto,nombre, telefono, direccion, correo} = req.query;
-    const response = await db.query('UPDATE public.contacto SET nombre=$2, telefono=$3, direccion=$4, correo=$5 WHERE id_contacto=$1;',[id_contacto,nombre, telefono, direccion, correo]) //primer paramatero de el arreglo
+    const {id_temperatura,ciudad,temperatura_valor,latitud,longitud} = req.query;
+    const response = await db.query('UPDATE public.temperatura SET ciudad=$2,temperatura_valor=$3,latitud=$4,longitud=$5 WHERE id_temperatura=$1;',[id_temperatura,ciudad,temperatura_valor,latitud,longitud]) //primer paramatero de el arreglo
     //UPDATE public.contacto SET id_contacto=?, nombre=?, telefono=?, direccion=?, correo=? WHERE <condition>;
     res.json({
-        message: 'Contacto ACTUALIZADA con exito',
+        message: 'Temperatura ACTUALIZADA con exito',
         body:{
-            pizza:{id_contacto,nombre, telefono, direccion, correo}
+            temperatura:{id_temperatura,ciudad,temperatura_valor,latitud,longitud}
         }
     })    
 }
-const updateContacto = async(req,res) =>{
+const updateTemperatura = async(req,res) =>{
     const id = req.params.id;
 
-    const{nombre,telefono,direccion, correo} = req.body;
-    const response = await pool.query('UPDATE contacto SET nombre=$1, telefono=$2, direccion=$3, correo=$4 WHERE id_contacto=$5',[
-        nombre,
-        telefono,
-        direccion,
-        correo,
+    const{ciudad,temperatura_valor,latitud,longitud} = req.body;
+    const response = await pool.query('UPDATE temperatura SET ciudad=$1,temperatura_valor=$2,latitud=$3,longitud=$4 WHERE id_temperatura=$5',[
+        ciudad,
+        temperatura_valor,
+        latitud,
+        longitud,
         id
     ]);
     
-    res.json(`Contacto ${id} actualizado correctamente`)
+    res.json(`temperatura ${id} actualizado correctamente`)
 
     
 }
 
 
 module.exports ={
-    getContactos,
-    getContactoByid,
-    postCreateContactos,
-    deleteContacto,
-    putUpdateContacto,
-    updateContacto
+    getTemperatura,
+    getTemperaturaByid,
+    postCreateTemperatura,
+    deleteTemperatura,
+    putUpdateTemperatura,
+    updateTemperatura
 }

@@ -1,10 +1,10 @@
 const {Router} = require('express')
-const { getContactos, getContactoByid, postCreateContactos, deleteContacto, updateContacto } = require('../controllers/controllers')
+const { getTemperatura, getTemperaturaByid, postCreateTemperatura, updateTemperatura, deleteTemperatura } = require('../controllers/controllers')
 const router = Router()
 
-router.get("/contactos",getContactos)
-router.get("/contactos/:id",getContactoByid)
-router.post("/contactos",postCreateContactos)
-router.put("/contactos/:id",updateContacto)
-router.delete("/contactos/:id",deleteContacto)
+router.get("/temperatura",getTemperatura)
+router.get("/temperatura/:id",getTemperaturaByid)
+router.post("/temperatura",postCreateTemperatura)
+router.put("/temperatura/:id",updateTemperatura)
+router.delete("/temperatura/:id",deleteTemperatura)
 module.exports=router
