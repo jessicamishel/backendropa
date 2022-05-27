@@ -8,6 +8,6 @@ router.post("/temperatura",postCreateTemperatura)
 router.put("/temperatura/:id",updateTemperatura)
 router.delete("/temperatura/:id",deleteTemperatura)
 router.post("/usuario",postUsuario)
-router.get("/temperatura/altas",getTemperaturaAltas)
-router.get("/temperatura/date/:date",getTemperaturaByDate)
+router.get("/temperaturass",getTemperaturaAltas)
+router.get("/temperaturass/:date",getTemperaturaByDate)
 module.exports=router
