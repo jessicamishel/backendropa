@@ -1,98 +1,55 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    
-    host: 'bpk3cjyu8b3ri5jrpwtl-postgresql.services.clever-cloud.com',
-    port: '5432',
-    database: 'bpk3cjyu8b3ri5jrpwtl',
-    user: 'u3zojzq3wlqcgif2z9it',
-    password: 'zOTipYek5dCXLmTDxXzC'
+    host:'ba8ebimqysxe4cawaakt-postgresql.services.clever-cloud.com',
+    port:'5432',
+    database:'ba8ebimqysxe4cawaakt',
+    user:'u1eyupo4f38xe5sc8f5q',
+    password:'Ac4gdQGGnUboh8bHErAS'
 });
 
-const getTemperatura = async (req, res) => {
-    const response = await pool.query('SELECT * FROM temperatura;')
+const getRopa = async (req, res) => {
+    const response = await pool.query('SELECT * from ropa order by id;')
     res.status(200).json(response.rows);
 }
 
-
-const postCreateTemperatura = async (req, res) => {
-    const {ciudad,temperatura_valor,latitud,longitud,fecha} = req.body;
+const getRopaByid = async (req, res) => {
+    const id = req.params.id
+    const response = await pool.query('SELECT * FROM ropa WHERE id = $1', [id])
+    res.json(response.rows);
+   
+}
+const postCreateRopa = async (req, res) => {
+    const { tipo, marca, nombre, talla,costo,imagen } = req.body;
     //const response = await 
-    const response = await pool.query('INSERT INTO temperatura(ciudad,temperatura_valor,latitud,longitud,fecha) VALUES ($1,$2,$3,$4,$5)', [ciudad,temperatura_valor,latitud,longitud,fecha]);
+    const response = await pool.query('INSERT INTO ropa(tipo,marca,nombre,talla,costo,imagen) VALUES ($1,$2,$3,$4,$5,$6)', [tipo, marca, nombre, talla,costo,imagen]);
     console.log(response);
     res.json({
-        message: 'Temperatura AGREGADO CORRECTAMENTE',
+        message: 'ROPA AGREGADA  CORRECTAMENTE',
 
     })
 };
 
-const getTemperaturaByid = async (req, res) => {
-    const id = req.params.id
-    const response = await pool.query('SELECT * FROM temperatura WHERE id_temperatura = $1', [id])
-    res.json(response.rows);
-   
-}
-
-const deleteTemperatura = async (req, res) => {
+const deleteRopa = async (req, res) => {
     const id = req.params.id;
-    const response = await pool.query('DELETE FROM temperatura WHERE id_temperatura = $1', [id])
+    const response = await pool.query('DELETE FROM ropa WHERE id = $1', [id])
     console.log(response);
-    res.json(`temperatura ${id} eliminado `)
+    res.json(`Ropa ${id} eliminado `)
 }
-const putUpdateTemperatura = async(req,res) =>{
-
-    const {id_temperatura,ciudad,temperatura_valor,latitud,longitud,fecha} = req.query;
-    const response = await db.query('UPDATE public.temperatura SET ciudad=$2,temperatura_valor=$3,latitud=$4,longitud=$5,fecha=$6 WHERE id_temperatura=$1;',[id_temperatura,ciudad,temperatura_valor,latitud,longitud, fecha]) //primer paramatero de el arreglo
-    //UPDATE public.contacto SET id_contacto=?, nombre=?, telefono=?, direccion=?, correo=? WHERE <condition>;
-    res.json({
-        message: 'Temperatura ACTUALIZADA con exito',
-        body:{
-            temperatura:{id_temperatura,ciudad,temperatura_valor,latitud,longitud,fecha}
-        }
-    })    
-}
-const updateTemperatura = async(req,res) =>{
+const updateRopa = async(req,res) =>{
     const id = req.params.id;
 
-    const{ciudad,temperatura_valor,latitud,longitud} = req.body;
-    const response = await pool.query('UPDATE temperatura SET ciudad=$1,temperatura_valor=$2,latitud=$3,longitud=$4,fecha=$5 WHERE id_temperatura=$6',[
-        ciudad,
-        temperatura_valor,
-        latitud,
-        longitud,
-        fecha,
-        id
+    const { tipo, marca, nombre, talla,costo,imagen } = req.body;
+    const response = await pool.query('UPDATE ropa SET tipo=$1, marca=$2, nombre=$3, talla=$4, costo=$5, imagen=$6 WHERE id=$7',[
+        tipo, marca, nombre, talla,costo,imagen,id
     ]);
     
-    res.json(`temperatura ${id} actualizado correctamente`)
-
-    
+    res.json(`Ropa ${id} actualizado correctamente :)`)    
 }
-
-const postUsuario= async (req, res)=> {
-    const { usuario, contrasenia } = req.body;
-    const response = await pool.query('SELECT * FROM usuario WHERE usuario = $1 and contrasenia=$2', [usuario, contrasenia]);
-    res.status(200).json(response.rows);
-}
-const getTemperaturaAltas = async (req, res) => {
-    const response = await pool.query('select * from temperatura order by temperatura_valor desc limit 5;')
-    res.status(200).json(response.rows);
-}
-const getTemperaturaByDate = async (req, res) => {
-    const date = req.params.date
-    const response = await pool.query('select * from temperatura where fecha=$1 order by temperatura_valor desc limit 5;', [date])
-    res.json(response.rows);
-    //select * from temperatura where fecha='27-05-2022' order by temperatura_valor desc limit 5;
-   
-}
-module.exports ={
-    getTemperatura,
-    getTemperaturaByid,
-    postCreateTemperatura,
-    deleteTemperatura,
-    putUpdateTemperatura,
-    updateTemperatura,
-    postUsuario,
-    getTemperaturaAltas,
-    getTemperaturaByDate
+module.exports={
+    getRopa,
+    getRopaByid,
+    postCreateRopa,
+    deleteRopa,
+    updateRopa
 }
