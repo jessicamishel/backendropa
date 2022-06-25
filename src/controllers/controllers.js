@@ -1,11 +1,11 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    host:'ba8ebimqysxe4cawaakt-postgresql.services.clever-cloud.com',
+    host:'bynlaxx3e1kfr2w1rdae-postgresql.services.clever-cloud.com',
     port:'5432',
-    database:'ba8ebimqysxe4cawaakt',
-    user:'u1eyupo4f38xe5sc8f5q',
-    password:'Ac4gdQGGnUboh8bHErAS'
+    database:'bynlaxx3e1kfr2w1rdae',
+    user:'udr1mgsby6pevmqvtiip',
+    password:'GmcVRRs0VQYzaCeE8Y4d'
 });
 
 const getRopa = async (req, res) => {
