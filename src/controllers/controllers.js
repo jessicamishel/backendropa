@@ -20,7 +20,7 @@ const getRopaByid = async (req, res) => {
    
 }
 const postCreateRopa = async (req, res) => {
-    const { tipo, marca, nombre, talla,costo,stock,imagen } = req.body;
+    const { tipo, marca, nombre, talla, costo, stock, imagen } = req.body;
     //const response = await 
     const response = await pool.query('INSERT INTO ropa(tipo,marca,nombre,talla,costo,stock,imagen) VALUES ($1,$2,$3,$4,$5,$6,$7)', [tipo, marca, nombre, talla,costo,stock,imagen]);
     console.log(response);
