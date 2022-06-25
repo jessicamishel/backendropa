@@ -20,9 +20,9 @@ const getRopaByid = async (req, res) => {
    
 }
 const postCreateRopa = async (req, res) => {
-    const { tipo, marca, nombre, talla,costo,imagen } = req.body;
+    const { tipo, marca, nombre, talla,costo,stock,imagen } = req.body;
     //const response = await 
-    const response = await pool.query('INSERT INTO ropa(tipo,marca,nombre,talla,costo,stock,imagen) VALUES ($1,$2,$3,$4,$5,$6,$7)', [tipo, marca, nombre, talla,costo,imagen]);
+    const response = await pool.query('INSERT INTO ropa(tipo,marca,nombre,talla,costo,stock,imagen) VALUES ($1,$2,$3,$4,$5,$6,$7)', [tipo, marca, nombre, talla,costo,stock,imagen]);
     console.log(response);
     res.json({
         message: 'ROPA AGREGADA  CORRECTAMENTE',
@@ -39,9 +39,9 @@ const deleteRopa = async (req, res) => {
 const updateRopa = async(req,res) =>{
     const id = req.params.id;
 
-    const { tipo, marca, nombre, talla,costo,imagen } = req.body;
+    const { tipo, marca, nombre, talla,costo,stock,imagen } = req.body;
     const response = await pool.query('UPDATE ropa SET tipo=$1, marca=$2, nombre=$3, talla=$4, costo=$5, stock=$6,imagen=$7 WHERE id=$8',[
-        tipo, marca, nombre, talla,costo,imagen,id
+        tipo, marca, nombre, talla,costo,stock,imagen,id
     ]);
     
     res.json(`Ropa ${id} actualizado correctamente :)`)    
