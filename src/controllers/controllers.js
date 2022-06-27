@@ -19,10 +19,18 @@ const getRopaByid = async (req, res) => {
     res.json(response.rows);
    
 }
+
+const getRopaByDate = async (req, res) => {
+    const id = req.params.id
+    const response = await pool.query('SELECT * FROM ropa WHERE id = $1', [id])
+    res.json(response.rows);
+   
+}
+
 const postCreateRopa = async (req, res) => {
-    const { tipo, marca, nombre, talla, costo, stock, imagen } = req.body;
+    const { tipo, marca, nombre, talla, costo, stock, imagen, fecha } = req.body;
     //const response = await 
-    const response = await pool.query('INSERT INTO ropa(tipo,marca,nombre,talla,costo,stock,imagen) VALUES ($1,$2,$3,$4,$5,$6,$7)', [tipo, marca, nombre, talla,costo,stock,imagen]);
+    const response = await pool.query('INSERT INTO ropa(tipo,marca,nombre,talla,costo,stock,imagen, fecha) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)', [tipo, marca, nombre, talla,costo,stock,imagen, fecha]);
     console.log(response);
     res.json({
         message: 'ROPA AGREGADA  CORRECTAMENTE',
@@ -39,9 +47,9 @@ const deleteRopa = async (req, res) => {
 const updateRopa = async(req,res) =>{
     const id = req.params.id;
 
-    const { tipo, marca, nombre, talla,costo,stock,imagen } = req.body;
-    const response = await pool.query('UPDATE ropa SET tipo=$1, marca=$2, nombre=$3, talla=$4, costo=$5, stock=$6,imagen=$7 WHERE id=$8',[
-        tipo, marca, nombre, talla,costo,stock,imagen,id
+    const { tipo, marca, nombre, talla,costo,stock,imagen,fecha } = req.body;
+    const response = await pool.query('UPDATE ropa SET tipo=$1, marca=$2, nombre=$3, talla=$4, costo=$5, stock=$6,imagen=$7, fecha=$8 WHERE id=$9',[
+        tipo, marca, nombre, talla,costo,stock,imagen,fecha,id
     ]);
     
     res.json(`Ropa ${id} actualizado correctamente :)`)    
