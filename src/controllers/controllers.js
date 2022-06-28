@@ -21,12 +21,16 @@ const getRopaByid = async (req, res) => {
 }
 
 const getRopaByDate = async (req, res) => {
-    const id = req.params.id
-    const response = await pool.query('SELECT * FROM ropa WHERE id = $1', [id])
+    const fecha = req.params.fecha
+    const response = await pool.query('SELECT * FROM ropa WHERE fecha = $1', [fecha])
     res.json(response.rows);
    
 }
-
+const getRopaByType = async (req, res) => {
+    const tipo = req.params.tipo
+    const response = await pool.query('select * from ropa where tipo = $1', [tipo])
+    res.json(response.rows)
+}
 const postCreateRopa = async (req, res) => {
     const { tipo, marca, nombre, talla, costo, stock, imagen, fecha } = req.body;
     //const response = await 
@@ -59,5 +63,7 @@ module.exports={
     getRopaByid,
     postCreateRopa,
     deleteRopa,
-    updateRopa
+    updateRopa,
+    getRopaByDate,
+    getRopaByType
 }
