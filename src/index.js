@@ -4,6 +4,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 
+app.use(cors({
+    origin:'*'
+}))
+
 app.use(require('./routes/index'))
 
 const PORT = process.env.PORT || 5000

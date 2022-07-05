@@ -29,4 +29,7 @@ router.post("/autenticar",postAutenticar)
 router.get("/venta", getVenta)
 router.post("/venta",postCreateVenta)
 
+//Usuario
+router.post('/login')
+
 module.exports = router;
